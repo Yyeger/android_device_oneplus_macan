@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/oplus/macan
+DEVICE_PATH := device/oneplus/macan
 
 # A/B
 AB_OTA_UPDATER := true
@@ -54,7 +54,7 @@ BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_SEPARATED_DTBO := true
 TARGET_KERNEL_CONFIG := macan_defconfig
-TARGET_KERNEL_SOURCE := kernel/oplus/macan
+TARGET_KERNEL_SOURCE := kernel/oneplus/macan
 
 # Kernel - prebuilt
 TARGET_FORCE_PREBUILT_KERNEL := true
@@ -75,8 +75,8 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
 BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
 BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 100663296
 BOARD_SUPER_PARTITION_SIZE := 9126805504 # TODO: Fix hardcoded value
-BOARD_SUPER_PARTITION_GROUPS := oplus_dynamic_partitions
-BOARD_OPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := \
+BOARD_SUPER_PARTITION_GROUPS := oneplus_dynamic_partitions
+BOARD_oneplus_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     vendor_dlkm \
     odm \
     system_ext \
@@ -84,7 +84,7 @@ BOARD_OPLUS_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     system_dlkm \
     vendor \
     product
-BOARD_OPLUS_DYNAMIC_PARTITIONS_SIZE := 9122611200 # TODO: Fix hardcoded value
+BOARD_oneplus_DYNAMIC_PARTITIONS_SIZE := 9122611200 # TODO: Fix hardcoded value
 
 # Platform
 TARGET_BOARD_PLATFORM := canoe
@@ -124,4 +124,4 @@ BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 
 # Inherit the proprietary files
-include vendor/oplus/macan/BoardConfigVendor.mk
+include vendor/oneplus/macan/BoardConfigVendor.mk

@@ -132,4 +132,4 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
 # Inherit the proprietary files
-$(call inherit-product, vendor/oplus/macan/macan-vendor.mk)
+$(call inherit-product, vendor/oneplus/macan/macan-vendor.mk)
