@@ -1,7 +1,7 @@
 # Android device tree for oneplus macan (macan)
 This is based on the chinese version of colorOS for the Oneplus ace 6T PLR110. \n
 
-I still need to set up a lineage os environement to extract the vendor stuff and build it. Every help is accepted !
+I've got a Debian system where i'm trying to make something at least buildable, however i'm going through an in depth debugging session using the device and vendor tree generated from aospdtgen on a dump of the latest OTA, Every help is accepted !
 
 ```
 #
