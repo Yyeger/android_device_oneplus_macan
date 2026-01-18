@@ -41,7 +41,7 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 
 # Kernel Cmdline (From your dump)
-BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 log_buf_len=2M nosoftlockup console=ttynull qcom_geni_serial.con_enabled=0 bootconfig buildvariant=user
+BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 log_buf_len=2M nosoftlockup console=ttynull qcom_geni_serial.con_enabled=0 bootconfig buildvariant=user androidboot.selinux=permissive
 
 # 5. Partitions
 # Use qti_dynamic_partitions (Standard for Qualcomm)
@@ -52,6 +52,9 @@ ODM_MANIFEST_FILES += \
     vendor/oneplus/macan/proprietary/odm/etc/vintf/telephony_manifest_dsds.xml \
     vendor/oneplus/macan/proprietary/odm/etc/vintf/telephony_manifest_ssss.xml
 
+DEVICE_MANIFEST_FILE += \
+    vendor/oneplus/macan/proprietary/vendor/etc/vintf/manifest_alor.xml \
+    vendor/oneplus/macan/proprietary/vendor/etc/vintf/manifest_canoe.xml
 
 BOARD_SUPER_PARTITION_SIZE := 9126805504
 BOARD_SUPER_PARTITION_GROUPS := qti_dynamic_partitions
