@@ -21,6 +21,9 @@ PRODUCT_MANUFACTURER := oneplus
 
 PRODUCT_GMS_CLIENTID_BASE := android-oneplus
 
+# Define the Fingerprint separately
+BUILD_FINGERPRINT := oneplus/macan/macan:16/BP2A.250605.015/1767156396771:user/release-keys
+
+# Use the overrides correctly (note PRIVATE_BUILD_DESC instead of BuildDesc)
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildDesc="qssi-user 16 BP2A.250605.015 1767156396771 release-keys" \
-    BuildFingerprint := oneplus/macan/macan:16/BP2A.250605.015/1767156396771:user/release-keys
+    PRIVATE_BUILD_DESC="qssi-user 16 BP2A.250605.015 1767156396771 release-keys"
