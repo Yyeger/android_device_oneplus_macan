@@ -35,10 +35,6 @@ PRODUCT_PACKAGES += \
     checkpoint_gc \
     otapreopt_script
 
-# API levels
-BOARD_API_LEVEL := 202504
-PRODUCT_SHIPPING_API_LEVEL := 36
-
 # fastbootd
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
@@ -61,7 +57,7 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 # Product characteristics
 PRODUCT_CHARACTERISTICS := nosdcard
 
-# Rootdir
+# Rootdir Scripts
 PRODUCT_PACKAGES += \
     coresight_reset_source_sink.sh \
     ftm_power_config.sh \
@@ -107,10 +103,10 @@ PRODUCT_PACKAGES += \
     onetracker_period.sh \
     qca6234-service.sh \
     system_dlkm_modprobe.sh \
-    vendor_modprobe.sh \
+    vendor_modprobe.sh
 
+# Rootdir Configs (Removed fstab.qcom from here)
 PRODUCT_PACKAGES += \
-    fstab.qcom \
     init.oem_ftm.rc \
     init.qcom.factory.rc \
     init.qcom.rc \
@@ -122,14 +118,14 @@ PRODUCT_PACKAGES += \
     vendor.oem_ftm.rc \
     vendor.oem_ftm_svc_disable.rc \
     init.recovery.qcom.rc \
-    ueventd.qcom.rc \
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_VENDOR_RAMDISK_OUT)/first_stage_ramdisk/fstab.qcom
+    ueventd.qcom.rc
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    $(LOCAL_PATH)
+    device/oneplus/macan
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/oneplus/macan/macan-vendor.mk)
+
+PRODUCT_COPY_FILES += \
+    device/oneplus/macan/rootdir/etc/fstab.qcom:vendor_ramdisk/first_stage_ramdisk/fstab.qcom

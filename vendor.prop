@@ -218,7 +218,6 @@ ro.vendor.beluga.p=0x3
 ro.vendor.beluga.s=0x900
 ro.vendor.beluga.t=0x240
 ro.vendor.board.family=f-canoe
-ro.vendor.build.ab_ota_partitions=abl,aop,aop_config,bluetooth,boot,cpucp,cpucp_dtb,dcp,devcfg,dsp,dtbo,engineering_cdt,featenabler,hyp,hyp_ac_config,imagefv,init_boot,keymaster,modem,multiimgoem,multiimgqti,my_bigball,my_carrier,my_company,my_engineering,my_heytap,my_manifest,my_preload,my_product,my_region,my_stock,odm,oplus_sec,pdp,pdp_cdb,product,pvmfw,qtvm_dtbo,qupfw,recovery,secretkeeper,shrm,soccp,soccp_dcd,soccp_debug,splash,spuservice,system,system_dlkm,system_ext,tme_config,tme_fw,tme_seq_patch,tz,tz_ac_config,tz_qti_config,uefi,uefisecapp,vbmeta,vbmeta_system,vbmeta_vendor,vendor,vendor_boot,vendor_dlkm,vm-bootsys,xbl,xbl_ac_config,xbl_config,xbl_ramdump
 ro.vendor.oplus.tango_allow32=true
 ro.vendor.perf-hal.ver=3.0
 ro.vendor.perf.scroll_opt=1
