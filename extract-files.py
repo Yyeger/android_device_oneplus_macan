@@ -10,14 +10,13 @@ from extract_utils.fixups_blob import (
 )
 from extract_utils.fixups_lib import (
     lib_fixups,
+    lib_fixups_user_type,
 )
 from extract_utils.main import (
     ExtractUtils,
     ExtractUtilsModule,
 )
 
-# this is a complicated file, in here some stuff seems to be the same as the giuliac device while others are different. 
-# this is a real trial and error i think
 namespace_imports = [
     'hardware/oplus',
     'hardware/qcom-caf/sm8845',
@@ -25,29 +24,49 @@ namespace_imports = [
     'vendor/qcom/opensource/commonsys-intf/display',
 ]
 
+
+def lib_fixup_vendor_suffix(lib: str, partition: str, *args, **kwargs):
+    return f'{lib}_{partition}' if partition == 'vendor' else None
+
+lib_fixups: lib_fixups_user_type = {
+    **lib_fixups,
+    (
+        'libhcsutils',
+        'libpwirisfeature',
+        'libPanelChaplin',
+        'vendor.oplus.hardware.camera.aon-V1-ndk',
+        'vendor.oplus.hardware.camera_rfi-V3-ndk',
+        'vendor.oplus.hardware.cammidasservice-V1-ndk',
+        'vendor.oplus.hardware.cwb-V2-ndk',
+        'vendor.oplus.hardware.displaycolorfeature-V1-ndk',
+        'vendor.oplus.hardware.sendextcamcmd-V2-ndk',
+        'vendor.pixelworks.hardware.display@1.0',
+        'vendor.pixelworks.hardware.display@1.1',
+        'vendor.pixelworks.hardware.display@1.2',
+        'vendor.pixelworks.hardware.feature@1.0',
+        'vendor.pixelworks.hardware.feature@1.1',
+    ): lib_fixup_vendor_suffix,
+}
+
 blob_fixups: blob_fixups_user_type = {
     'odm/etc/camera/CameraHWConfiguration.config': blob_fixup()
+        # Disable face detection AE behaviour
         .regex_replace(r'(enableSWfdForThirdCamUnit += )TRUE', r'\1FALSE')
-        .regex_replace(r'(fdSupport += )TRUE;', r'\1FALSE;'),
+        .regex_replace(r'(fdSupport += )TRUE;', r'\1FALSE;')
+        # Expose AUX cameras
+        .regex_replace('SystemCamera =  0;  0;  0;  1;  0; 1;', 'SystemCamera =  0;  0;  0;  0;  0; 0;'),
     'odm/etc/init/init.camera_process.rc': blob_fixup()
         .regex_replace('    delete_recursion', '    #delete_recursion'),
     (
-        'odm/etc/libnfc-mtp-SN220.conf_23821',
-        'odm/etc/libnfc-mtp-SN220.conf_23893'
-    ): blob_fixup()
-        .regex_replace('(NXPLOG_.*_LOGLEVEL)=0x03', '\\1=0x02')
-        .regex_replace('NFC_DEBUG_ENABLED=1', 'NFC_DEBUG_ENABLED=0'),
-    'odm/firmware/fastchg/23821/charging_hyper_mode_config.txt': blob_fixup()
-        .regex_replace(r"(PROJECT:=)23893", r"\g<1>23821"),
-    'odm/lib64/libAlgoProcess.so': blob_fixup()
-        .replace_needed('android.hardware.graphics.common-V5-ndk.so', 'android.hardware.graphics.common-V6-ndk.so'),
-    (
-        'odm/lib64/libAncHumanSegFigureFusion.so',
+        'odm/lib64/libAlgoProcess.so',
         'odm/lib64/libEIS.so',
-        'odm/lib64/libHIS.so',
+        'odm/lib64/libEISLive.so',
+        'odm/lib64/libFaceBeautyJni.so',
+        'odm/lib64/libFaceDistortionCorrection.so',
         'odm/lib64/libOPAlgoCamAiBeautyFaceRetouchCn.so',
         'odm/lib64/libOPAlgoCamAiUnifySkin.so',
         'odm/lib64/libOPAlgoCamFaceBeautyCap.so',
+        'odm/lib64/libaiboost_te.so',
     ): blob_fixup()
         .clear_symbol_version('AHardwareBuffer_acquire')
         .clear_symbol_version('AHardwareBuffer_allocate')
@@ -56,20 +75,32 @@ blob_fixups: blob_fixups_user_type = {
         .clear_symbol_version('AHardwareBuffer_lockPlanes')
         .clear_symbol_version('AHardwareBuffer_release')
         .clear_symbol_version('AHardwareBuffer_unlock'),
-    'odm/lib64/libextensionlayer.so': blob_fixup()
-        .replace_needed('vendor.oplus.hardware.performance-V1-ndk_platform.so', 'vendor.oplus.hardware.performance-V1-ndk.so'),
-    'odm/lib64/libsensorbridge.so': blob_fixup()
-        .replace_needed('android.hardware.sensors-V2-ndk.so', 'android.hardware.sensors-V3-ndk.so'),
     'vendor/etc/libnfc-nci.conf': blob_fixup()
         .regex_replace('NFC_DEBUG_ENABLED=1', 'NFC_DEBUG_ENABLED=0'),
+    'vendor/etc/libnfc-nxp.conf': blob_fixup()
+        .regex_replace('(NXPLOG_.*_LOGLEVEL)=0x03', '\\1=0x02')
+        .regex_replace('NFC_DEBUG_ENABLED=1', 'NFC_DEBUG_ENABLED=0'),
+    (
+        'odm/lib64/libAlgoProcess.so',
+        'vendor/lib64/libpwirishalwrapper.so',
+        'vendor/lib64/libsdmclient.so',
+    ): blob_fixup()
+        .replace_needed('android.hardware.graphics.common-V5-ndk.so', 'android.hardware.graphics.common-V6-ndk.so'),
     (
         'vendor/lib64/camera/components/com.qti.node.dewarp.so',
-        'vendor/lib64/hw/com.qti.chi.override.so',
-        'vendor/lib64/libcamximageformatutils.so',
-        'vendor/lib64/libchifeature2.so',
         'vendor/lib64/vendor.qti.hardware.camera.offlinecamera-service-impl.so',
     ): blob_fixup()
         .replace_needed('android.hardware.graphics.allocator-V1-ndk.so', 'android.hardware.graphics.allocator-V2-ndk.so'),
+    (
+        'vendor/lib64/libcwb_qcom_aidl.so',
+        'vendor/lib64/libhwcsensor.so',
+        'vendor/lib64/libsdmclient.so',
+    ): blob_fixup()
+        .replace_needed('vendor.qti.hardware.display.config-V11-ndk.so', 'vendor.qti.hardware.display.config-V13-ndk.so'),
+    'vendor/lib64/libpwirishalwrapper.so': blob_fixup()
+        .replace_needed('android.hardware.graphics.composer3-V3-ndk.so', 'android.hardware.graphics.composer3-V4-ndk.so'),
+    'vendor/lib64/libsdmcore.so': blob_fixup()
+        .add_needed('libbase.so'),
 }  # fmt: skip
 
 module = ExtractUtilsModule(
@@ -78,7 +109,7 @@ module = ExtractUtilsModule(
     namespace_imports=namespace_imports,
     blob_fixups=blob_fixups,
     lib_fixups=lib_fixups,
-    add_firmware_proprietary_file=True,
+#    add_firmware_proprietary_file=True,
 )
 
 if __name__ == '__main__':

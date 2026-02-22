@@ -3,3 +3,9 @@ bluetooth.device.default_name=OnePlus Ace 6T
 
 # USB
 vendor.usb.product_string=OnePlus Ace 6T
+
+# Graphics
+debug.sf.auto_latch_unsignaled=1
+ro.surface_flinger.set_display_power_timer_ms=1000
+ro.surface_flinger.set_idle_timer_ms=80
+ro.surface_flinger.set_touch_timer_ms=200
