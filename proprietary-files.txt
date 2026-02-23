@@ -1522,7 +1522,7 @@ odm/firmware/fastchg/batt_dchg_ctrl_config_table.txt
 odm/firmware/fastchg/batt_eis_config.txt
 odm/firmware/fastchg/batt_si_loss_config_table.txt
 odm/firmware/fastchg/bms_heating_config.txt
-odm/firmware/fastchg/silicon_x25_X2_smart_chg_config_table.txt
+#odm/firmware/fastchg/silicon_x25_X2_smart_chg_config_table.txt
 odm/firmware/fastchg/smart_chg_config_table.txt
 
 
