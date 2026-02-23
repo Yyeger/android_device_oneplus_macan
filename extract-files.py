@@ -93,7 +93,7 @@ blob_fixups: blob_fixups_user_type = {
         .replace_needed('android.hardware.graphics.allocator-V1-ndk.so', 'android.hardware.graphics.allocator-V2-ndk.so'),
     (
         'vendor/lib64/libcwb_qcom_aidl.so',
-        'vendor/lib64/libhwcsensor.so',
+        #'vendor/lib64/libhwcsensor.so', temporary removed for hash mismatch
         'vendor/lib64/libsdmclient.so',
     ): blob_fixup()
         .replace_needed('vendor.qti.hardware.display.config-V11-ndk.so', 'vendor.qti.hardware.display.config-V13-ndk.so'),
